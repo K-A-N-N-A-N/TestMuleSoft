@@ -45,3 +45,23 @@ target/
 .mule/
 .DS_Store
 velocity.log
+
+# MuleSoft / Anypoint Studio
+target/
+.classpath
+.project
+.settings/
+.mule/
+.muleRefactorBackup/
+*.tmp
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
