@@ -26,4 +26,18 @@ payload]]></ee:set-payload>
 			</ee:message>
 		</ee:transform>
 	</flow>
+	<flow name="testmuleFlow" doc:id="a3073bf0-738d-468f-8f2f-3fb715fbd20d" >
+		<http:listener doc:name="/testInputValue" doc:id="f9d51150-ed96-4e2d-89e4-fc9fdbaa56fe" config-ref="HTTP_Listener_config1" path="/testInputValue"/>
+		<db:select doc:name="Select" doc:id="5c94ff12-4f10-479f-9277-1288294e9dba" config-ref="Database_Config">
+			<db:sql ><![CDATA[select * from doctor where name =  "Dr. Kannan MD";]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="44e94447-a69c-4d20-b602-507634e05fbd" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
 </mule>
