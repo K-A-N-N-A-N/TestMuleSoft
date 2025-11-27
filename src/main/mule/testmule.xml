@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:db="http://www.mulesoft.org/schema/mule/db"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/db http://www.mulesoft.org/schema/mule/db/current/mule-db.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config1" doc:name="HTTP Listener config" doc:id="ff0d9b17-9ab1-4535-9a78-cc4ef4f5a241" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<db:config name="Database_Config" doc:name="Database Config" doc:id="7b355e64-2c9b-43ad-9a52-fe6da850639e" >
+		<db:my-sql-connection host="127.0.0.1" port="3306" user="root" password="Kannan@3807" database="hospital_management" />
+	</db:config>
+	<flow name="testmuleFlow1" doc:id="7979aa66-cd33-4677-a962-1f46d31b5eb6" >
+		<http:listener doc:name="Listener" doc:id="702aea0f-73b5-4a66-b4bc-9e09c90863c6" config-ref="HTTP_Listener_config1" path="/connetToDb"/>
+		<db:select doc:name="Select" doc:id="7e38d47f-ff85-4d5f-b87e-b44ecc98cacf" config-ref="Database_Config">
+			<db:sql ><![CDATA[Select * from users;]]></db:sql>
+		</db:select>
+		<ee:transform doc:name="Transform Message" doc:id="2645ba82-6da8-4418-874b-90bac1073d16" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
